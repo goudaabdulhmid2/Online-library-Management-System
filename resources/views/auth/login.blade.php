@@ -30,7 +30,7 @@
          @enderror
 
 
-            <button class="btn primary-btn">Login</button>
+            <button class="btn btn-primary">Login</button>
         </form>
     </div>
 </x-layout>

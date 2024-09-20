@@ -43,11 +43,26 @@ class AuthController extends Controller
 
         // Login
         if(Auth::attempt($fields,$request->remember)){
-            return redirect()->intended();
+            return redirect()->intended('dashboard');
         }
 
         // Failed  to login  and redirect back with error message
         return back()->withErrors(['failed'=>'Incorrect email or password']);
 
+    }
+
+    // Logout
+    public function logout(Request $request){
+        // Logout  from the application  
+        Auth::logout();
+
+        // Destroy session 
+        $request->session()->invalidate();
+
+        // Regenerate new CSRF token  to prevent session fixation attacks
+        $request->session()->regenerateToken();
+
+        // Redirect to home
+        return redirect('/');
     }
 }
