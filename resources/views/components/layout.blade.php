@@ -15,27 +15,29 @@
         <a href="{{route('books.index')}}" class="nav-link">Home</a>
 
         @auth
-            <div class="relative grid place-items-center"  x-data= "{ open: false} ">
+            <div class="relative grid place-items-center" x-data="{ open: false }">
                 {{--Drop down Menu button --}}
-                <button @click="open= !open" type="button" class="round-btn">
+                <button  @click="open = !open" type="button" class="round-btn">
                     <img src="https://picsum.photos/200" alt="">
                 </button>
 
                 {{--Drop down Menu --}}
                 <div x-show="open" @click.outside="open =false" class="bg-white shadow-lg absolute top-10 right-0 rounded-lg overflow-hidden font-light">
+
                     <p class="username">{{  auth()->user()->username  }}</p>
-                    <a href="{{route('dashboard')}}" class="block hover:bg-slate-100 pl-4 pr-8 py-2 mb-1">Dashboard</a>
+
+                    <a href="{{route('dashboard')}}"  class="block hover:bg-slate-100 pl-4 pr-8 py-2 mb-1">Dashboard</a>
 
                     <form action="{{route('logout')}}" method="Post">
                         @csrf
-                        <button class="black w-full text-left hover:bg-slate-100 pl-4 pr-8 py-2">Logout</button>
+                        <button class="block w-full text-left hover:bg-slate-100 pl-4 pr-8 py-2">Logout</button>
                     </form>
                 </div>
             </div>
         @endauth
 
         @guest
-            <div class="flex items-center gap-4 ">
+            <div class="flex items-center gap-4">
                 <a href="{{ route('login') }}" class="nav-link">Login</a>
                 <a href="{{route('register')}}" class="nav-link">Register</a>
             </div>
@@ -45,7 +47,7 @@
 
     </nav>
 </header>
-    <main class="py-8 px-4 mx- auto max-w-screen-lg"> 
+    <main class="py-8 px-4 mx-auto max-w-screen-lg"> 
        {{ $slot }}
     </main>
     

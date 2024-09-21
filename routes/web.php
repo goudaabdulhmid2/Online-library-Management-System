@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookController;
 
-
+use App\Http\Middleware\AdminMiddleware;
 
 Route::redirect('/','books');
 
@@ -26,6 +26,10 @@ Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard')
 
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
+
+
+
+
 
 
 
