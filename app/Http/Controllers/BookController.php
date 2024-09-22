@@ -29,7 +29,7 @@ class BookController extends Controller
     public function create()
     {
        
-        if (!Auth::user() || Auth::user()->role !== 'admin') {
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
             return redirect('/')->with('error', 'Access denied. Only admins can perform this action.');
         }
 
@@ -44,7 +44,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::user() || Auth::user()->role !== 'admin') {
+        if (!Auth::check() || Auth::user()->role !== 'admin') {
             return redirect('/')->with('error', 'Access denied. Only admins can perform this action.');
         }
         // validate

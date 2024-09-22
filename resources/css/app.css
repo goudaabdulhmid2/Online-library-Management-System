@@ -78,6 +78,16 @@
         background-color: #022347;
         border-color: #007bff;
     }
+    .btn-secondry {
+        color: #fff;
+        background-color: #056508;
+        border-color: #007bff;
+    }
+    .btn-danger {
+        color: #fff;
+        background-color: #f80000;
+        border-color: #007bff;
+    }
 
     .sp {
         display: inline-block;

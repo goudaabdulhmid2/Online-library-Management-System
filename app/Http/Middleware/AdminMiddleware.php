@@ -17,10 +17,10 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(Auth::user() && Auth::user()->role == 'admin' ){
+        if( Auth::user()->role == 'admin' || Auth::user()->role == 'manager'){
         return $next($request);
       }
 
-      return redirect('/')->with('error', 'Access denied. Admins only.');
+      return redirect()->route('books.index')->with('error', 'Access denied. Admins only.');
     }
 }

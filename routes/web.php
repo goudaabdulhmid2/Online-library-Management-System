@@ -4,13 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookController;
-
+use App\Http\Controllers\GenreController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminMiddleware;
 
 Route::redirect('/','books');
 
 Route::resource('books',BookController::class);
-
+Route::resource('genres',GenreController::class);
 Route::middleware('guest')->group(function (){
 
 Route::post('/register',[AuthController::class,'register']);
@@ -26,6 +27,11 @@ Route::get('/dashboard',[DashboardController::class,'index'])->name('dashboard')
 
 Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
+
+Route::middleware('auth')->group(function(){
+    Route::resource('users',UserController::class);
+});
+
 
 
 

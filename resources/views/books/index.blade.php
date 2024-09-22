@@ -1,6 +1,18 @@
 
 <x-layout>
 
+    @if (session('error'))
+        <div class="mb-2">
+            <x-flashMsg msg="{{session('error')}}"  bg="bg-red-500"/>
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="mb-2">
+            <x-flashMsg msg="{{session('success')}}" />
+        </div>
+    @endif
+
     <div class="grid grid-cols-2 gap-6">
         @foreach ($books as $book)
         <div class="card">
