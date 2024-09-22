@@ -23,9 +23,6 @@ class UserPolicy
     }
     
 
-    public function isIdManager($id)
-    {
-        $user = User::find($id); // Retrieve the user instance
-        return  $user->role === 'manager'; // Ensure the user exists
-    }
+
+    
 }

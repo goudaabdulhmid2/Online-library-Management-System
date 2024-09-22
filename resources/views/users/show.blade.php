@@ -14,34 +14,40 @@
     @endif
 
     <div class="grid grid-cols-2 gap-6">
+
      
         <div class="card">
+            
+            <div class="fond-bold text-xl mb-4">
+                <span>Id</span>
+                <p class="text-blue-500 font-medium">{{$userToShow->id}}</p>
+            </div>
             <div class="fond-bold text-xl mb-4">
                 <span>Username</span>
-                <p class="text-blue-500 font-medium">{{$user['username']}}</p>
+                <p class="text-blue-500 font-medium">{{$userToShow['username']}}</p>
             </div>
 
             <div class="fond-bold text-xl mb-4">
                 <span>Email</span>
-                <p class="text-blue-500 font-medium">{{$user->email}}</p>
+                <p class="text-blue-500 font-medium">{{$userToShow->email}}</p>
             </div>
 
             <div class="fond-bold text-xl mb-4">
                 <span>Role</span>
-                <p class="text-blue-500 font-medium">{{$user->role}}</p>
+                <p class="text-blue-500 font-medium">{{$userToShow->role}}</p>
             </div>
 
             <div class="fond-bold text-xl mb-4">
                 <span>Created at:</span>
-                <p class="text-blue-500 font-medium">{{$user->created_at->diffForHumans()}}</p>
+                <p class="text-blue-500 font-medium">{{$userToShow->created_at->diffForHumans()}}</p>
             </div>
             <div class="fond-bold text-xl mb-4">
                 <span>Updated at:</span>
-                <p class="text-blue-500 font-medium">{{$user->updated_at->diffForHumans()}}</p>
+                <p class="text-blue-500 font-medium">{{$userToShow->updated_at->diffForHumans()}}</p>
             </div>
 
-            <a href="/users/{{$user->id}}/edit" class="sp btn-secondry">Update</a>
-            <form method="post"  action="/users/{{ $user['id'] }}" style="display: inline;">
+            <a href="/users/{{$userToShow->id}}/edit" class="sp btn-secondry">Update</a>
+            <form method="post"  action="/users/{{ $userToShow['id'] }}" style="display: inline;">
                 @method('DELETE')
                 @csrf
                 <input type="submit" value="Delete" name="Delete" class='sp btn-danger' style="display: inline;" >
@@ -55,7 +61,7 @@
    @if ($borroweds->count() > 0)
        
     {{-- Student borroweds --}}
-    <h2 class="font-bold mb-4">{{$user->username}} Latest borroweds</h2>
+    <h2 class="font-bold mb-4">{{$userToShow->username}} Latest borroweds</h2>
 
 
     <div class="grid grid-cols-2 gap-6">

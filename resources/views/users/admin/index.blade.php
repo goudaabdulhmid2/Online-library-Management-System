@@ -36,6 +36,11 @@
                 <span>Email</span>
                 <p class="text-blue-500 font-medium">{{$user->email}}</p>
             </div>
+            
+            <div class="fond-bold text-xl mb-4">
+                <span>Role</span>
+                <p class="text-blue-500 font-medium">{{$user->role}}</p>
+            </div>
 
             <a href="/users/{{$user->id}}" class="sp btn-primary">View</a>
             <a href="/users/{{$user->id}}/edit" class="sp btn-secondry">Update</a>

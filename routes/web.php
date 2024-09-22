@@ -29,7 +29,20 @@ Route::post('/logout',[AuthController::class,'logout'])->name('logout');
 });
 
 Route::middleware('auth')->group(function(){
+   
+    // Custom routes for updating user details and password
+    Route::patch('/users/{id}/details',[UserController::class,'updateUserDetails'])->name('users.updateDetails');
+    Route::patch('/users/{id}/password',[UserController::class,'updatePassword'])->name('users.updatePassword');
+
+    // Route for editing the current authenticated user's profile
+    Route::get('/users/editMe', [UserController::class, 'editMe'])->name('users.editMe');
+    Route::patch('/users/editMeDetalis',[UserController::class, 'updateMeDetalis'])->name('users.updateMeDetalis');
+    Route::patch('/users/editMePassword',[UserController::class, 'updateMePassword'])->name('users.updateMePassword');
+
+    // Resource routes for users (index, show, create, store, edit, update, destroy)
     Route::resource('users',UserController::class);
+
+    
 });
 
 
