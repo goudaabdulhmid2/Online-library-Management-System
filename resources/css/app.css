@@ -88,6 +88,11 @@
         background-color: #f80000;
         border-color: #007bff;
     }
+    .btn-loan {
+        color: #fff;
+        background-color: #13bcda;
+        border-color: #007bff;
+    }
 
     .sp {
         display: inline-block;

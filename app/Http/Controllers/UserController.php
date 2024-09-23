@@ -304,5 +304,10 @@ class UserController extends Controller  implements HasMiddleware
         return redirect('dashboard')->with('success', 'Your password updated successfully!');
     }
 
+    public function profile(){
+        $userToShow = Auth::user();
+        return view('users.me', compact('userToShow'));
+    }
+
 
 }

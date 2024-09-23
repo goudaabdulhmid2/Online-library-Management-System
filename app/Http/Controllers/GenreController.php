@@ -8,13 +8,20 @@ use App\Http\Requests\UpdateGenreRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
+use  App\Http\Middleware\AdminMiddleware;
+use Illuminate\Validation\Rule;
 
-
-class GenreController extends Controller
+class GenreController extends Controller implements HasMiddleware
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
+    public static function middleware(): array{
+        return [
+            'auth',
+            new Middleware(AdminMiddleware::class)
+        ];
+    }
     public function index()
     {
         //
@@ -25,9 +32,7 @@ class GenreController extends Controller
      */
     public function create()
     {
-        if (!Auth::check() || Auth::user()->role !== 'admin') {
-            return redirect('/')->with('error', 'Access denied. Only admins can perform this action.');
-        }
+       
 
         return view('genres.create');
     }
@@ -37,9 +42,7 @@ class GenreController extends Controller
      */
     public function store(Request $request)
     {
-        if(!Auth::check() || Auth::user()->role !== 'admin'){
-            return redirect()->route('books.index')->with('error', 'Access denied. Only admins can perform this action.');
-        }
+       
 
         $data = $request->validate([
             'name' => 'required|string|max:255|unique:genres',

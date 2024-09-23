@@ -13,6 +13,14 @@
         </div>
     @endif
 
+    <form action="{{ route('books.index') }}" method="GET">
+        <div class="flex items-center">
+        <label for="search_title" class="fond-bold text-xl mb-4">Search Book by title:</label>
+        <input type="text" name="search" placeholder="Search by title..." value="{{ request('search') }}">
+        <button type="submit" class="sp btn-primary">Search</button>
+        </div>
+    </form>
+
     <div class="grid grid-cols-2 gap-6">
         @foreach ($books as $book)
         <div class="card">
@@ -20,11 +28,6 @@
             <div class="text-xs font-light mb-4">
                 <span>Author</span>
                 <p class="text-blue-500 font-medium">{{$book->author}}</p>
-            </div>
-
-            <div class="text-xs font-light mb-4">
-                <span>Quantity</span>
-                <p class="text-blue-500 font-medium">{{$book->quantity}}</p>
             </div>
 
             <div class="text-xs font-light mb-4">
@@ -36,6 +39,25 @@
                 <span>Description:</span>
                 <p>  {{ Str::words($book->description,10) }}</p>
             </div>
+
+            @if(Auth::user() && Auth::user()->role =='student')
+            <a href="/books/{{$book->book_id}}" class="sp btn-loan">Borrow</a>
+            @endif
+
+            <a href="/books/{{$book->book_id}}" class="sp btn-primary">View</a>
+          
+
+           @if(Auth::user() && Auth::user()->role !='student')
+
+               <a href="/books/{{$book->book_id}}/edit" class="sp btn-secondry">Update</a>
+               <form method="post"  action="/books/{{ $book->book_id }}" style="display: inline;">
+                   @method('DELETE')
+                   @csrf
+                   <input type="submit" value="Delete" name="Delete" class='sp btn-danger' style="display: inline;" >
+           
+               </form>
+           
+           @endif
         </div>
         @endforeach
     </div>
