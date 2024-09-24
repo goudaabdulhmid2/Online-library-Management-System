@@ -71,13 +71,13 @@
 
                 <div class="flex items-center justify-end gap-4 mt-6">
                     {{-- Update post --}}
-                    <a href=""
+                    <a href="/loans/{{$borrowed->loan_id}}/edit"
                         class="bg-green-500 text-white px-2 py-1 text-xs rounded-md">Update</a>
 
                     {{-- Delete post --}}
-                    <form action="" method="post">
-                        @csrf
+                    <form action="/loans/{{$borrowed->loan_id}}" method="post">
                         @method('DELETE')
+                        @csrf
                         <button class="bg-red-500 text-white px-2 py-1 text-xs rounded-md">Delete</button>
                     </form>
                 </div>

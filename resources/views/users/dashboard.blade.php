@@ -56,8 +56,8 @@
                 </div>
 
                 <div class="text-xs font-light mb-4">
-                    <span>Number of active loans</span>
-                    <p class="text-blue-500 font-medium">{{$activeLoansCount}}</p>
+                    <span>Number of active borrowed books</span>
+                    <p class="text-blue-500 font-medium">{{$borrowedBooksActiveCount}}</p>
                 </div>
 
                 <a href="/books/create" class="sp btn-primary">Add new book</a>
@@ -83,9 +83,28 @@
 
             </div>
 
-         
-        
+                {{-- loans --}}
+                <div class="card">
+                    <h2 class="fond-bold text-xl">Borrowed books</h2>
+                    <div class="text-xs font-light mb-4">
+                        <span>Number of borrowed books</span>
+                        <p class="text-blue-500 font-medium">{{$borrowedBooksActiveCount}}</p>
+                    </div>
+    
+                    <div class="text-xs font-light mb-4">
+                        <span>Number of books avliable to borrowed </span>
+                        <p class="text-blue-500 font-medium">{{$booksAvliableToBorrowed}}</p>
+                    </div>
+    
+                    <br>
+                    <br>
+                    <a href="/loans/create" class="sp btn-primary">Add new loan</a>
+                    <a href="/loans" class="sp btn-secondry">View</a>
+                </div>
+    
 
+         
+    
 
     </div>
    

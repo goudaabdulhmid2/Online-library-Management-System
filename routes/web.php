@@ -6,6 +6,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoanController;
+
 use App\Http\Middleware\AdminMiddleware;
 
 Route::redirect('/','books');
@@ -13,6 +15,8 @@ Route::redirect('/','books');
 Route::resource('books',BookController::class);
 
 Route::resource('genres',GenreController::class);
+
+Route::resource('loans',LoanController::class);
 
 Route::middleware('guest')->group(function (){
 

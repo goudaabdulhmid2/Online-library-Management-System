@@ -23,16 +23,22 @@ class DashboardController extends Controller // implements HasMiddleware
     public function index(){
 
         $bookCount = Book::count();
+        $booksAvliableToBorrowed = Book::where('quantity','>',0)->count();
+
         $genreCount = Genre::count();
-        $activeLoansCount=Loan::where('loan_status','active')->count();
+
+        $borrowedBooksActiveCount = Loan::where('loan_status','active')->count();
+
         $usersCount = User::count();
         $adminsCount = User::where('role','admin')->count();
         $studentsCount = User::where('role','student')->count();
 
+
         $data = [
             'bookCount' => $bookCount,
             'genreCount' => $genreCount,
-            'activeLoansCount' => $activeLoansCount,
+            'borrowedBooksActiveCount' => $borrowedBooksActiveCount,
+            'booksAvliableToBorrowed' => $booksAvliableToBorrowed,
             'usersCount' => $usersCount,
             'adminsCount' => $adminsCount,
            'studentsCount' => $studentsCount,

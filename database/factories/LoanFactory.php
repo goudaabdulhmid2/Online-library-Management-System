@@ -17,8 +17,8 @@ class LoanFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id'=>fake()->numberBetween(4, 5),
-            'book_id'=>fake()->numberBetween(1,50),
+            'user_id' => fake()->randomElement([5, 8]),
+            'book_id'=>fake()->numberBetween(1,52),
             'loan_date'=>now(),
             'due_date'=>now()->addDays(7),
 

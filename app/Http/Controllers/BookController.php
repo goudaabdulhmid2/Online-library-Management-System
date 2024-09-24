@@ -90,7 +90,13 @@ class BookController extends Controller implements HasMiddleware
         $bookBorrowed = Loan::where('book_id', $book->book_id)->count();
         $book->quantity -=  $bookBorrowed;
         $book->borrowed = $bookBorrowed;
-        return view('books.show', compact('book'));
+
+        // Fetch all users who have borrowed this book and pass them to the view.
+        $loans = Loan::with('user')->where('book_id', $book->book_id)->where('loan_status','active')->paginate(10);
+
+        //dd($loans);
+
+        return view('books.show', compact('book', 'loans'));
     }
 
   

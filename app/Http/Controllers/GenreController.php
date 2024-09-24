@@ -24,7 +24,9 @@ class GenreController extends Controller implements HasMiddleware
     }
     public function index()
     {
-        //
+        $genres = Genre::paginate(10);
+
+        return view('genres.index', compact('genres'));
     }
 
     /**
@@ -32,8 +34,6 @@ class GenreController extends Controller implements HasMiddleware
      */
     public function create()
     {
-       
-
         return view('genres.create');
     }
 
@@ -42,7 +42,6 @@ class GenreController extends Controller implements HasMiddleware
      */
     public function store(Request $request)
     {
-       
 
         $data = $request->validate([
             'name' => 'required|string|max:255|unique:genres',
@@ -55,35 +54,43 @@ class GenreController extends Controller implements HasMiddleware
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Genre $genre)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Genre $genre)
+    public function edit($id)
     {
-        //
+        $genre = Genre::find($id);
+        return view('genres.edit', compact('genre'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGenreRequest $request, Genre $genre)
+    public function update(Request $request, $id)
     {
-        //
+        $genre = Genre::find($id);
+        $data = $request->validate([
+            'name' => [
+               'required',
+               'string',
+               'max:255',
+               Rule::unique('genres')->ignore($id),
+               ]]);
+
+        $genre->update($data);
+
+        return redirect('/genres')->with('success', 'Genre updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genre $genre)
+    public function destroy( $id)
     {
-        //
+        $genre = Genre::find($id);
+        $genre->delete();
+
+        return redirect('/genres')->with('success', 'Genre deleted successfully.');
     }
 }

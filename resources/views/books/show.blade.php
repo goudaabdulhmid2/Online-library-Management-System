@@ -79,7 +79,48 @@
         @endif
 
 
+       
+
+    
+
+
     </div>
+    <br>
+     {{-- users who have borrowed this book --}}
+     @if(Auth::user() && Auth::user()->role !='student')
+
+        @if ($loans->count() > 0)
+            
+            
+            <h2 class="font-bold mb-4"> users who still borrowed this book</h2>
+
+
+            <div class="grid grid-cols-2 gap-6">
+                @foreach ($loans as $loan)
+                    {{-- Post card component --}}
+                    <x-usersCard :user="$loan->user">
+
+                        <div class="flex items-center justify-end gap-4 mt-6">
+                            {{-- Update view --}}
+                            <a href="/users/{{$loan->user->id}}"
+                                class="bg-blue-500 text-white px-2 py-1 text-xs rounded-md">View</a>
+                        </div>
+                    </x-usersCard>
+                @endforeach
+            </div>
+
+            {{-- Pagination links --}}
+            <div>
+                {{ $loans->links() }}
+            </div>
+        @else
+            <h2 class="font-bold mb-4">No user borrowed this book yet</h2>
+            
+        @endif
+ 
+    @endif
+
+ 
 
 
              
