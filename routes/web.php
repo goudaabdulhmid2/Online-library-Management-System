@@ -16,6 +16,8 @@ Route::resource('books',BookController::class);
 
 Route::resource('genres',GenreController::class);
 
+Route::get('/loans/user/{id}',[LoanController::class,'userBorrowed'])->name('userBorrowed');
+
 Route::resource('loans',LoanController::class);
 
 Route::middleware('guest')->group(function (){

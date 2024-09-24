@@ -21,7 +21,7 @@ class UserController extends Controller  implements HasMiddleware
     public static function middleware(){
 
         return [
-            new Middleware(AdminMiddleware::class, except: ['editMe','updateMeDetalis','updateMePassword']),
+            new Middleware(AdminMiddleware::class, except: ['editMe','updateMeDetalis','updateMePassword','profile']),
         ];
     }
 
@@ -64,7 +64,8 @@ class UserController extends Controller  implements HasMiddleware
         return view('users.admin.index', compact('users','searchId'));
     }
 
-    public function show($id){ 
+    public function show($id){
+
     // Get the current authenticated user
     $currentUser = Auth::user();
     

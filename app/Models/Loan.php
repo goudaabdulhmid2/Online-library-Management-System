@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -36,6 +37,8 @@ class Loan extends Model
         'return_date',
         'loan_status',
     ];
+
+    protected $dates = ['loan_date', 'due_date'];
 
 
     public function user()

@@ -6,7 +6,7 @@ use App\Models\Loan;
 use App\Models\Book;
 use App\Models\Genre;
 use App\Models\User;
-
+use Carbon\Carbon;
 
 
 use App\Http\Requests\StoreLoanRequest;
@@ -26,7 +26,7 @@ class LoanController extends Controller implements HasMiddleware
     public static function middleware(): array{
         return [
             'auth',
-            new Middleware(AdminMiddleware::class)
+            new Middleware(AdminMiddleware::class,except:['userBorrowed'])
         ];
     }
     /**
@@ -101,25 +101,39 @@ class LoanController extends Controller implements HasMiddleware
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,$id)
+    public function update(Request $request, $id)
     {
-       $loan = Loan::find($id);
-       $data = $request->validate([
-            'loan_date'=>['required', 'date'],
-            'due_date'=>['required', 'date', 'after_or_equal:loan_date'], 
-            'loan_status'=>['required', 'in:active,returned']  
+        // Find the loan
+        $loan = Loan::findOrFail($id);
+    
+        // Validate the incoming request
+        $data = $request->validate([
+            'loan_date' => ['required', 'date'],
+            'due_date' => ['required', 'date', 'after_or_equal:loan_date'],
+            'loan_status' => ['required', 'in:active,returned'],
         ]);
-        $checkCurrentStatus = $loan->loan_status == 'returned'? 1:0;
-        $loan->update($data);
-
-        if(!$checkCurrentStatus && $data['loan_status'] == 'returned' ){
+    
+        // Check if the current loan status is 'returned'
+        $checkCurrentStatus = $loan->loan_status == 'returned' ? 1 : 0;
+    
+        // Update the loan data
+        if (!$checkCurrentStatus && $data['loan_status'] == 'returned') {
+            // If changing to returned, set the return date and increment the book quantity
+            $data['return_date'] = now(); 
             Book::where('book_id', $loan->book_id)->increment('quantity', 1);
-        }elseif($checkCurrentStatus && $data['loan_status'] == 'active'){
+        } elseif ($checkCurrentStatus && $data['loan_status'] == 'active') {
+            // If changing back to active, remove the return date and decrement book quantity
+            $data['return_date'] = null; 
             Book::where('book_id', $loan->book_id)->decrement('quantity', 1);
         }
-
+    
+        // Update the loan in the database
+        $loan->update($data);
+    
+        // Redirect with success message
         return redirect('/loans')->with('success', 'Loan updated successfully.');
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -134,5 +148,18 @@ class LoanController extends Controller implements HasMiddleware
             Book::where('book_id', $loan->book_id)->increment('quantity', 1);
         }
        return redirect('/loans')->with('success', 'Loan deleted successfully.');
+    }
+
+    public function userBorrowed($id){
+        $borrow = Loan::with('user','book')->find($id);
+        if(!$borrow){
+            return redirect('/')->with('error', 'No active loan found.');
+        }
+
+        $remainingDays = Carbon::now()->diffInDays(Carbon::parse($borrow->due_date));
+        $borrow->remainingDays = ceil($remainingDays);
+        
+
+        return view('loans.user.show',compact('borrow'));
     }
 }

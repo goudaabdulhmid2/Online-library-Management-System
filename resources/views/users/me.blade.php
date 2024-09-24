@@ -13,7 +13,8 @@
     @endif
 
     <div class="grid grid-cols-1 gap-6">
-     
+
+        <h2 class="font-bold mb-4"> Profile</h2>
         <div class="card">
             
 
@@ -36,7 +37,7 @@
                 <span>Created at:</span>
                 <p class="text-blue-500 font-medium">{{$userToShow->created_at}}</p>
             </div>
-
+            <a href="/users/editMe" class="sp btn-secondry">Update</a>
         </div>
     </div>
 
