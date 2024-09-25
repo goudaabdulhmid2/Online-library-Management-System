@@ -12,9 +12,16 @@
 <body class="bg-slate-100  text-slate-900">
     <header class="bg-slate-800 shadow-lg">
     <nav>
-        <a href="{{route('books.index')}}" class="nav-link">Home</a>
+        <div class="flex space-x-4"> 
+            <a href="{{route('books.index')}}" class="nav-link nave_m">Home</a>
+            @if(Auth::check()&&Auth::user()->role === 'student')
+                <a href="{{route('usersBorrowed')}}" class="nav-link nave_m"> borrowed books</a>
+            @endif
+        </div>
 
         @auth
+
+          
             <div class="relative grid place-items-center" x-data="{ open: false }">
                 {{--Drop down Menu button --}}
                 <button  @click="open = !open" type="button" class="round-btn">

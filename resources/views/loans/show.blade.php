@@ -48,6 +48,21 @@
                 <p class="text-blue-500 font-medium">{{$loan->due_date}}</p>
             </div>
 
+            @if($loan->return_date)
+                <div class="fond-bold text-xl mb-4">
+                    <span>returned date</span>
+                    <p class="text-blue-500 font-medium">{{$loan->return_date}}</p>
+                </div>
+
+            @endif
+
+            @if ($loan->loan_status == 'active')
+                <div class="fond-bold text-xl mb-4">
+                    <span>remaining days to returned</span>
+                    <p class="text-blue-500 font-medium">{{ $loan->remainingDays>0 ? "$loan->remainingDays days" :'Time come to returned book.'}}</p>
+                </div>
+            @endif
+
 
             <a href="/loans/{{$loan->loan_id}}/edit" class="sp btn-secondry">Update</a>
             <form method="post"  action="/loans/{{$loan->loan_id }}" style="display: inline;">

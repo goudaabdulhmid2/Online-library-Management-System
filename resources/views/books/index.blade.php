@@ -37,11 +37,11 @@
 
             <div class="text-sm font-light mb-4">
                 <span>Description:</span>
-                <p>  {{ Str::words($book->description,10) }}</p>
+                <p class="text-blue-500 font-medium">  {{ Str::words($book->description,10) }}</p>
             </div>
 
             @if(Auth::user() && Auth::user()->role =='student')
-            <a href="/books/{{$book->book_id}}" class="sp btn-loan">Borrow</a>
+            <a href="/loans/userBorrowed/{{$book->book_id}}" class="sp btn-loan">Borrow</a>
             @endif
 
             <a href="/books/{{$book->book_id}}" class="sp btn-primary">View</a>

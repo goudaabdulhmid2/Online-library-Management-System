@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -56,7 +55,7 @@ class DashboardController extends Controller
                         $query->where('title', 'like', '%' . $search . '%');
                     });
                 }
-            })
+            })->orderBy('loan_status', 'asc')
             ->paginate(10);
          
             foreach ($userBorrows as $borrow) {

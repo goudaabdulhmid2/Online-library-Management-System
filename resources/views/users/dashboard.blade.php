@@ -9,7 +9,7 @@
 
     @if (session('error'))
         <div class="mb-2">
-            <x-flashMsg msg="{{session('error')}}" />
+            <x-flashMsg msg="{{session('error')}}"  bg='bg-red-500'/>
         </div>
     @endif
 
@@ -135,22 +135,35 @@
                     </div>
 
                     
-                                 
-                <div class="fond-bold text-xl mb-4">
-                    <span>remaining days to returned</span>
-                    <p class="text-blue-500 font-medium">{{ $borrow->remainingDays>0 ? $borrow->remainingDays :'Time come to returned book.'}} days</p>
-                </div>
+                
+
+                    @if($borrow->loan_status !== 'returned')            
+                        <div class="fond-bold text-xl mb-4">
+                            <span>remaining days to returned</span>
+                            <p class="text-blue-500 font-medium">{{ $borrow->remainingDays>0 ? "$borrow->remainingDays days" :'Time come to returned book.'}}</p>
+                        </div>
+                    @else
+                        <div class="fond-bold text-xl mb-4">
+                            <span>returned date</span>
+                            <p class="text-blue-500 font-medium">{{$borrow->return_date}} </p>
+                        </div>
+                    @endif
                     
 
 
                     <a href="/loans/user/{{$borrow->loan_id}}" class="sp btn-primary">View</a>
-                    <a href="/loans/{{$borrow->loan_id}}/edit" class="sp btn-secondry">Update</a>
-                    <form method="post"  action="/loans/{{$borrow->loan_id }}" style="display: inline;">
-                        @method('DELETE')
-                        @csrf
-                        <input type="submit" value="Delete" name="Delete" class='sp btn-danger' style="display: inline;" >
-                
-                    </form>
+
+                    @if($borrow->loan_status == 'active') 
+
+                        <form action="/loans/user/{{$borrow->loan_id}}" method="post" style="display: inline;">
+                            @method('PATCH')
+                            @csrf
+                            
+                            <button class="sp btn-secondry">Returned</button>
+        
+                        </form>
+
+                    @endif
 
                 </div>
             @endforeach

@@ -8,8 +8,6 @@ use App\Models\Loan;
 
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use Illuminate\Routing\Controllers\Middleware;
 use  App\Http\Middleware\AdminMiddleware;
@@ -40,12 +38,12 @@ class BookController extends Controller implements HasMiddleware
              // Query to get books, allowing partial matches with the 'LIKE' operator
             $books = Book::when($search, function($query, $search) {
                 return $query->where('title', 'LIKE', '%' . $search . '%');
-            })->paginate(10); 
+            })->where('quantity', '>', 0)->paginate(10); 
         }
         // If no search query is provided, fetch all books from the database and paginate them
         else{
         
-            $books = Book::paginate(10);
+            $books = Book::where('quantity', '>', 0)->paginate(10);
          }
     
         return view('books.index', compact('books'));

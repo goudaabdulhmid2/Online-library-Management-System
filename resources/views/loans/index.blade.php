@@ -35,15 +35,13 @@
                 <p class="text-blue-500 font-medium">{{$loan->loan_status}}</p>
             </div>
 
-            <div class="fond-bold text-xl mb-4">
-                <span>Loan date</span>
-                <p class="text-blue-500 font-medium">{{$loan->loan_date}}</p>
-            </div>
-            
-            <div class="fond-bold text-xl mb-4">
-                <span>Due date</span>
-                <p class="text-blue-500 font-medium">{{$loan->due_date}}</p>
-            </div>
+            @if($loan->loan_status == 'active')
+                <div class="fond-bold text-xl mb-4">
+                    <span>remaining days to returned</span>
+                    <p class="text-blue-500 font-medium">{{ $loan->remainingDays>0 ? "$loan->remainingDays days" :'Time come to returned book.'}}</p>
+                </div>
+            @endif
+ 
 
             <a href="/loans/{{$loan->loan_id}}" class="sp btn-primary">View</a>
             <a href="/loans/{{$loan->loan_id}}/edit" class="sp btn-secondry">Update</a>

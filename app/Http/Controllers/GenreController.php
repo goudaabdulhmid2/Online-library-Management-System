@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Genre;
-use App\Http\Requests\StoreGenreRequest;
-use App\Http\Requests\UpdateGenreRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 use Illuminate\Routing\Controllers\HasMiddleware;

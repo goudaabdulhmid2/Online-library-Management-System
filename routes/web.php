@@ -18,6 +18,16 @@ Route::resource('genres',GenreController::class);
 
 Route::get('/loans/user/{id}',[LoanController::class,'userBorrowed'])->name('userBorrowed');
 
+Route::get('/loans/userBorrowed/{id}',[LoanController::class,'userBorrowCreate'])->name('userBorrowCreate');
+
+Route::post('/loans/userBorrowed/{id}',[LoanController::class,'userBorrowStore'])->name('userBorrowStore');
+
+Route::patch('/loans/user/{id}',[LoanController::class,'userBorrowedUpdate'])->name('userBorrowedUpdate');
+
+Route::get('/loans/usersBorrowed',[LoanController::class,'usersBorrowed'])->name('usersBorrowed');
+
+
+
 Route::resource('loans',LoanController::class);
 
 Route::middleware('guest')->group(function (){
