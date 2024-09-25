@@ -38,7 +38,7 @@ The application utilizes the following database tables:
 
 | Column Name | Data Type    | Constraints              |
 | ----------- | ------------ | ------------------------ |
-| book_id     | SERIAL       | PRIMARY KEY              |
+| book_id     | INT          | PRIMARY KEY              |
 | title       | VARCHAR(255) | NOT NULL                 |
 | author      | VARCHAR(255) | NOT NULL                 |
 | genre_id    | INT          | FOREIGN KEY              |
@@ -55,9 +55,9 @@ The application utilizes the following database tables:
 
 | Column Name | Data Type                           | Constraints       |
 | ----------- | ----------------------------------- | ----------------- |
-| user_id     | SERIAL                              | PRIMARY KEY       |
+| user_id     | INT                                 | PRIMARY KEY       |
 | username    | VARCHAR(50)                         | NOT NULL          |
-| email       | VARCHAR(255)                        | UNIQUE            |
+| email       | VARCHAR(255)                        | NOT NULL, UNIQUE  |
 | password    | VARCHAR(255)                        | NOT NULL          |
 | role        | ENUM('student', 'admin', 'manager') | DEFAULT 'student' |
 
@@ -93,7 +93,8 @@ The application utilizes the following database tables:
     composer install
     ```
 4. Set up the environment:
-   . Copy .env.example to .env and configure your database settings.
+
+-   Copy .env.example to .env and configure your database settings.
 
 5. Run migrations:
 
